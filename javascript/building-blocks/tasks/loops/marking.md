@@ -77,18 +77,12 @@ You should use a type of loop that you've not used in the previous two tasks.
 The code should look something like this:
 
 ```
-while(i >= 2) {
-
-
-  if(!isPrime(i)) {
-    i--;
-    continue;
+do {
+  if (isPrime(i)) {
+    para.textContent += `${i} `;
   }
-
-  para.textContent += `${i} `;
   i--;
-
-}
+} while (i > 1);
 ```
 
-This isn't the most elegant of solutions, but it's arguably reasonable. See [this discussion](https://discourse.mozilla.org/t/loops-3-question-incrementor-up-top/60406) for some ideas on why. 
+(Answer provided by harryghgim; well done!)
