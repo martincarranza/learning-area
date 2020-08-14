@@ -1,25 +1,88 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Simple setInterval clock</title>
     <style>
-      p {
-        font-family: sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <p class="clock"></p>
-    <script>
-      function displayTime() {
-        let date = new Date();
-        let time = date.toLocaleTimeString();
-        document.querySelector('.clock').textContent = time;
-      }
+        body {
+            background-color: black;
+            align-items: center;
+        }
 
-      displayTime();
-      const createClock = setInterval(displayTime, 1000);
-    </script>
-  </body>
+        h1 {
+            font-family: serif;
+            color: red;
+        }
+        p {
+            font-family: sans-serif;
+            font-size: 1.5em;
+        }
+
+        .watch {
+            background-color: rgb(204,255,212);
+            text-align: center;
+            border: solid 3px gray;
+            border-radius: 15px;
+            max-width: 400px;
+            max-height: 400px;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: black;
+            color: white;
+            margin: 1px;
+            border: solid 2px red;
+        }
+    </style>
+</head>
+<body>
+    <div class="watch">
+        <h1>Stop Watch</h1>
+        <p class="clock"></p>
+        <p><button class="start">Start</button><button class="stop">Stop</button><button class="reset">Reset</button></p>
+    </div>
+<script>
+    let secondCount = 0;
+    let stopWatch;
+    const displayPara = document.querySelector('.clock');
+
+    function displayCount(){
+        let hours = Math.floor(secondCount/3600);
+        let minutes = Math.floor((secondCount % 3600)/60);
+        let seconds = Math.floor(secondCount % 60);
+
+        let displayHours = (hours < 10) ? '0' + hours: hours;
+        let displayMinutes = (minutes < 10) ? '0' + minutes: minutes;
+        let displaySeconds = (seconds < 10) ? '0' + seconds: seconds;
+
+        displayPara.textContent = `TIME ${displayHours}:${displayMinutes}:${displaySeconds}`;
+
+        secondCount++;
+    }
+
+    const startBtn = document.querySelector('.start');
+    const stopBtn = document.querySelector('.stop');
+    const resetBtn = document.querySelector('.reset');
+
+    startBtn.addEventListener('click', () => {
+        stopWatch = setInterval(displayCount, 1000);
+        startBtn.disabled = true;
+    });
+
+    stopBtn.addEventListener('click', () => {
+        clearInterval(stopWatch);
+        startBtn.disabled = false;
+    });
+
+    resetBtn.addEventListener('click', () => {
+        clearInterval(stopWatch);
+        startBtn.disabled = false;
+        secondCount = 0;
+        displayCount();
+    });
+
+    displayCount();
+</script>
+</body>
 </html>
